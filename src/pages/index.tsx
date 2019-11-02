@@ -1,58 +1,68 @@
 import React from 'react';
 import styles from './index.css';
-import { Row, Col } from 'antd';
+import { Row, Col, Spin } from 'antd';
 import BraftEditor from 'braft-editor';
 import {wordDict} from './dict';
 import 'braft-editor/dist/index.css';
 
-export class Tools extends React.Component<{}, { replaceState: any }> {
+export class Tools extends React.Component<{}, {editorState: any, replaceState: string }> {
+  private debounceTimer: any;
+  private wordReg: any;
+  private isDebouncing: boolean;
   constructor(props: any) {
     super(props);
+    this.debounceTimer = 0;
     this.state = {
-      replaceState: BraftEditor.createEditorState(null),
+      editorState: BraftEditor.createEditorState(null),
+      replaceState: ''
     };
+    this.isDebouncing = false;
+    this.wordReg = new RegExp(`(${wordDict.join('|')})`, 'g');
   }
 
   componentWillMount() {}
 
-  handleEditorChange = state => {
-    let replaceHTML = state.toHTML();
-    let wordReg = new RegExp(`${wordDict.join('|')}`, 'g');
-    let wordMatch = replaceHTML.match(wordReg);
-    console.log(wordMatch, 'wordMatch');
+  asyncToCopyEditor(state) {
+    let me = this;
+    clearTimeout(me.debounceTimer);
+    me.debounceTimer = setTimeout(() => {
+      let replaceHTML = state.toHTML().replace(me.wordReg, `<span style="color:red">$1</span>`);
+      replaceHTML = replaceHTML.replace(new RegExp('> </p>', 'g'), '></p>');
+      me.setState({ replaceState: replaceHTML });
+    }, 200);
+  }
 
-    if (wordMatch instanceof Array && wordMatch.length >= 1) {
-      wordMatch.map(ele => {
-        let weijngReg = new RegExp(`(${ele})`, 'g');
-        replaceHTML = replaceHTML.replace(weijngReg, '<span style="color:red;">$1</span>');
-        console.log('times');
-      })
-    }
-    const tmp = BraftEditor.createEditorState(replaceHTML);
-    this.setState({ replaceState: tmp });
+  handleEditorChange = editorState => {
+    this.asyncToCopyEditor(editorState)
+    this.setState({ editorState });
   };
 
   render() {
     return (
       <>
+        <Row style={{margin: '10px 0', textAlign: 'left'}}>
+          <Col span={12}>
+              已经输入
+              {this.state.editorState && this.state.editorState.toText().length}
+              个字(在此粘贴文案,根据文稿长短，请您耐心等待5-45秒)
+            </Col>
+            <Col span={12}>
+            新广告法禁用词已用<span style={{color: 'red'}}>红色</span>高亮字体标出,请您参考修改，审慎发布
+            </Col>
+        </Row>
         <Row>
           <Col span={12}>
             <BraftEditor
               contentStyle={{height: 'auto', minHeight: 400}}
               className={styles.editor}
-              placeholder="在此粘贴文案,按动上方按钮后，根据文稿长短，请您耐心等待5-45秒"
+              placeholder="在此粘贴文案"
               controls={[]}
+              value={this.state.editorState}
               onChange={this.handleEditorChange}
             />
           </Col>
           <Col span={12}>
-            <BraftEditor
-              contentStyle={{height: 'auto', minHeight: 400}}
-              readOnly={true}
-              className={styles.validator}
-              controls={[]}
-              value={this.state.replaceState}
-            />
+            <div className={styles.validator} dangerouslySetInnerHTML={{__html: this.state.replaceState}} />
           </Col>
         </Row>
       </>

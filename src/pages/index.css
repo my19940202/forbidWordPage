@@ -28,8 +28,19 @@
   border: 1px solid #ddd;
 }
 .validator {
+  text-align: left;
   min-height: 400px;
+  font-size: 16px;
   height: auto;
   background-color: #ddd;
   border: 1px solid #ddd;
+  padding: 15px;
 }
+.validator p {
+  line-height: normal;
+  margin: 0;
+}
+.validator p:empty {
+  padding: 9px 0;
+}
+

@@ -15,11 +15,14 @@
   background: darkslateblue;
   color: white;
   margin: 0;
-  padding: .4em 0 .8em 0;
+  padding: .4em 0;
 }
 .tips {
   position: absolute;
   left: 50%;
   bottom: 5px;
   color: #ddd;
+}
+.content {
+  padding: 0 20px;
 }
