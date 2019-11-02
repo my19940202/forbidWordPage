@@ -3,6 +3,8 @@ import { IConfig } from 'umi-types';
 // ref: https://umijs.org/config/
 const config: IConfig =  {
   treeShaking: true,
+  base: '/static',
+  publicPath: './',
   routes: [
     {
       path: '/',
@@ -20,7 +22,7 @@ const config: IConfig =  {
       dynamicImport: false,
       title: 'forbidWordPage',
       dll: false,
-      
+
       routes: {
         exclude: [
           /components\//,
