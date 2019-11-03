@@ -42,12 +42,12 @@ export class Tools extends React.Component<{}, {editorState: any, replaceState: 
       <>
         <Row style={{margin: '10px 0', textAlign: 'left'}}>
           <Col span={12}>
-              已经输入
+              在此粘贴文案后自动识别,根据文稿长短，请您耐心等待5-45秒(已经输入
               {this.state.editorState && this.state.editorState.toText().length}
-              个字(在此粘贴文案,根据文稿长短，请您耐心等待5-45秒)
+              个字)
             </Col>
             <Col span={12}>
-            新广告法禁用词已用<span style={{color: 'red'}}>红色</span>高亮字体标出,请您参考修改，审慎发布
+            新广告法禁用词、小红书禁用词已用<span style={{color: 'red'}}>红色</span>高亮字体标出,请您参考修改，审慎发布
             </Col>
         </Row>
         <Row>

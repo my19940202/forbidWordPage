@@ -8,7 +8,9 @@
       var hm = document.createElement("script");
       hm.src = "https://hm.baidu.com/hm.js?1a34c19ed6d59adfa38fac7261462103";
       var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
+      if (window.location.hostname !== 'localhost') {
+        s.parentNode.insertBefore(hm, s);
+      }
     })();
     </script>
 </head>
