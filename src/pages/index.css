@@ -1,14 +1,25 @@
 
-.normal {
-  font-family: Georgia, sans-serif;
-  margin-top: 4em;
-  text-align: center;
+.wrapper {
+  width: 100%;
+  position: relative;
 }
-
-.welcome {
-  height: 328px;
-  background: url(../assets/yay.jpg) no-repeat center 0;
-  background-size: 388px 328px;
+.title {
+  font-size: 2.5rem;
+  font-weight: normal;
+  letter-spacing: -1px;
+  background: darkslateblue;
+  color: white;
+  margin: 0;
+  padding: .4em 0;
+}
+.tips {
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  color: #ddd;
+}
+.content {
+  padding: 0 20px;
 }
 
 .list {
