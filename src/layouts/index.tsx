@@ -1,9 +1,11 @@
 import React from 'react';
 import styles from './index.css';
+import withRouter from 'umi/withRouter';
+import { connect } from 'dva';
 
-const BasicLayout: React.FC = (props: any) => {
-  if (props.location.pathname.indexOf('/test') !== -1) {
-    return (<>{props.children}</>);
+const BasicLayout = ({dispatch, products, children, location}: any) => {
+  if (location.pathname.indexOf('/test') !== -1) {
+    return (<>{children}</>);
   }
   return (
     <div className={styles.normal}>
@@ -11,10 +13,12 @@ const BasicLayout: React.FC = (props: any) => {
         <h1 className={styles.title}>小红书禁用词查询工具</h1>
       </div>
       <div className={styles.content}>
-        {props.children}
+        {children}
       </div>
     </div>
   );
-};
+}
 
-export default BasicLayout;
+export default withRouter(connect(({app}: any) => ({
+  app
+}))(BasicLayout));

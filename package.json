@@ -11,7 +11,9 @@
   "dependencies": {
     "antd": "^3.19.5",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "dva": "^2.4.1",
+    "store2": "^2.7.1"
   },
   "devDependencies": {
     "@types/jest": "^23.3.12",
