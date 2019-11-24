@@ -11,12 +11,12 @@ export const dva = {
     },
     initialState: {
       products: [
-        { name: 'dva', id: 1 },
-        { name: 'antd', id: 2 },
+        { name: 'dva', email: 1 },
+        { name: 'antd', email: 2 },
       ]
     },
     onStateChange(state: any) {
-      console.log('onStateChange', state);
+      // console.log('onStateChange', state);
     }
   },
 };
