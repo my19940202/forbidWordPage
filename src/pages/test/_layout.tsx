@@ -16,11 +16,14 @@ const MenuLayout: React.FC = props => {
       <Layout.Sider width={200} style={{ background: '#fff' }}>
           <Menu
             mode="inline"
-            defaultSelectedKeys={['articlelist']}
+            defaultSelectedKeys={['index']}
             style={{ height: '100%', borderRight: 0 }}
           >
               <Menu.Item key="index">
-                <Link to="/test/">首页</Link>
+                <Link to="/test/">菜谱小工具</Link>
+              </Menu.Item>
+              <Menu.Item key="test">
+                <Link to="/test/test">测试</Link>
               </Menu.Item>
               <Menu.Item key="about">
                 <Link to="/test/aboutus">关于我们</Link>
@@ -34,10 +37,7 @@ const MenuLayout: React.FC = props => {
             <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>八斗会</Breadcrumb.Item>
             </Breadcrumb>
-            <Layout.Content
-              style={{background: '#fff',padding: 24,margin: 0, minHeight: 280}}
-            >
-              this is content
+            <Layout.Content style={{background: '#fff',padding: 24,margin: 0, minHeight: 280}}>
               {props.children}
             </Layout.Content>
         </Layout>

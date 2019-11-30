@@ -1,13 +1,12 @@
 import React from 'react';
 import {
-    Button, Row, Col, Input, Form, Checkbox, Icon
+  Button, Row, Col, Input, Form, Checkbox, Icon
 } from 'antd';
 import {ProductList} from '../../components/ProductList';
-import {DishTable} from '../../components/DishTable';
 import { connect } from 'dva';
 
 interface TestFormInterface {
-    dispatch: any;
+  dispatch: any;
 }
 class TestForm extends React.Component<TestFormInterface, {}> {
   handleSubmit = e => {
@@ -59,8 +58,8 @@ class TestForm extends React.Component<TestFormInterface, {}> {
 }
 
 interface propsInterface {
-    dishes: any[];
-    dispatch: any;
+  products: any[];
+  dispatch: any;
 }
 class Test extends React.Component<propsInterface, {}> {
   constructor(props: any) {
@@ -68,15 +67,12 @@ class Test extends React.Component<propsInterface, {}> {
   }
 
   render() {
-    // const WrappedTestForm: any = Form.create({ name: 'test_from' })(TestForm);
-    let dishes = this.props.dishes;
+    const WrappedTestForm: any = Form.create({ name: 'test_from' })(TestForm);
+    let products = this.props.products;
     let dispatch = this.props.dispatch;
     return (
       <>
         <Row>
-            <DishTable data={dishes} />
-        </Row>
-        {/* <Row>
           <Col span={12}>
             <h3>antd form</h3>
             <WrappedTestForm dispatch={dispatch} />
@@ -87,16 +83,16 @@ class Test extends React.Component<propsInterface, {}> {
             <h3>ProductList</h3>
             <ProductList products={products}/>
           </Col>
-        </Row> */}
+        </Row>
       </>
     );
   }
 }
 
-const TestWrapper = ({ dispatch, dishes}: any) => {
-  return <Test dispatch={dispatch} dishes={dishes} />;
+const TestWrapper = ({ dispatch, products}: any) => {
+  return <Test dispatch={dispatch} products={products} />;
 }
 
-export default connect(({dispatch, dishes}: any) => ({
-  dishes
+export default connect(({dispatch, products}: any) => ({
+  products
 }))(TestWrapper);
