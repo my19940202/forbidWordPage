@@ -2,8 +2,8 @@ import React from 'react';
 import {
     Button, Row, Col, Input, Form, Checkbox, Icon
 } from 'antd';
-import {ProductList} from '../../components/ProductList';
 import {DishTable} from '../../components/DishTable';
+import {DishAddModal} from '../../components/DishAddModal';
 import { connect } from 'dva';
 
 interface TestFormInterface {
@@ -63,34 +63,37 @@ interface propsInterface {
     dispatch: any;
 }
 class Test extends React.Component<propsInterface, {}> {
-  constructor(props: any) {
-    super(props);
-  }
-
-  render() {
-    // const WrappedTestForm: any = Form.create({ name: 'test_from' })(TestForm);
-    let dishes = this.props.dishes;
-    let dispatch = this.props.dispatch;
-    return (
-      <>
-        <Row>
-            <DishTable data={dishes} />
-        </Row>
-        {/* <Row>
-          <Col span={12}>
-            <h3>antd form</h3>
-            <WrappedTestForm dispatch={dispatch} />
-          </Col>
-        </Row>
-        <Row>
-          <Col span={12}>
-            <h3>ProductList</h3>
-            <ProductList products={products}/>
-          </Col>
-        </Row> */}
-      </>
-    );
-  }
+    constructor(props: any) {
+        super(props);
+        this.updateModal = this.updateModal.bind(this);
+    }
+    updateModal(event: MouseEvent) {
+        let dispatch = this.props.dispatch;
+        dispatch({
+            type: 'dishes/updateModal',
+            payload: {modal: true}
+        });
+    }
+    render() {
+        // const WrappedTestForm: any = Form.create({ name: 'test_from' })(TestForm);
+        let dishes: any = this.props.dishes;
+        let dispatch = this.props.dispatch;
+        let modalConfig = {
+            dispatch,
+            open: dishes.modal,
+            selectItem: null,
+        }
+        let me = this;
+        return (<>
+            <Row>
+                <Button type="primary" icon="plus" onClick={me.updateModal} />
+            </Row>
+            <Row>
+                <DishTable data={dishes} />
+            </Row>
+            <DishAddModal config={modalConfig} />
+        </>);
+    }
 }
 
 const TestWrapper = ({ dispatch, dishes}: any) => {

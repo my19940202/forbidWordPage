@@ -8,7 +8,7 @@ export default {
                 createTime: '2019-11-12 19:49',
                 updateTime: '2019-11-30 19:49',
                 desc: 'adsfadfa',
-                photos: []
+                photos: ['']
             }, {
                 id: 2,
                 name: '昂刺鱼豆腐汤',

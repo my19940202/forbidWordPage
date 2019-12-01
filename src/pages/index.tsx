@@ -20,8 +20,6 @@ export class Tools extends React.Component<{}, {editorState: any, replaceState: 
     this.wordReg = new RegExp(`(${wordDict.join('|')})`, 'g');
   }
 
-  componentWillMount() {}
-
   asyncToCopyEditor(state) {
     let me = this;
     clearTimeout(me.debounceTimer);

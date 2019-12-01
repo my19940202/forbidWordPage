@@ -1,6 +1,5 @@
 import store2 from 'store2'
 import { message } from 'antd'
-console.log(' this is init app state');
 
 export const dva = {
   config: {

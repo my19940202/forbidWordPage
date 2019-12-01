@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, Spin} from 'antd';
+import {Table, Spin, Button} from 'antd';
 import {isEmpty} from 'lodash';
 
 export const DishTable = ({data: {list, total}}: any) => {
@@ -19,8 +19,16 @@ export const DishTable = ({data: {list, total}}: any) => {
         title: '创建时间',
         dataIndex: 'createTime',
         key: 'createTime',
-    }];
-    console.log(list, total, 'dishes');
+    }, {
+        title: 'Action',
+        key: 'action',
+        render: (text, record) => (
+            <span>
+                <Button type="primary" icon="edit"/>&nbsp;
+                <Button type="primary" icon="delete"/>
+            </span>
+        ),
+      }];
 
     return (
         <>
