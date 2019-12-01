@@ -2,7 +2,21 @@ import React from 'react';
 import {Table, Spin, Button} from 'antd';
 import {isEmpty} from 'lodash';
 
-export const DishTable = ({data: {list, total}}: any) => {
+export const DishTable = ({dispatch, data: {list, total}}: any) => {
+    const dispatchEdit = (id) => dispatch({
+        type: 'dishes/edit',
+        payload: {
+            id,
+        }
+    })
+    const editEvent = () => {
+        // redux值
+        // 显示窗口
+        dispatch({
+            type: 'dishes/updateModal',
+            payload: {modal: true}
+        });
+    };
     const columns = [{
         title: 'id',
         dataIndex: 'id',
@@ -28,7 +42,7 @@ export const DishTable = ({data: {list, total}}: any) => {
                 <Button type="primary" icon="delete"/>
             </span>
         ),
-      }];
+    }];
 
     return (
         <>

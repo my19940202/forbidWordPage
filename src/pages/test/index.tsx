@@ -89,7 +89,7 @@ class Test extends React.Component<propsInterface, {}> {
                 <Button type="primary" icon="plus" onClick={me.updateModal} />
             </Row>
             <Row>
-                <DishTable data={dishes} />
+                <DishTable data={dishes} dispatch={dispatch} />
             </Row>
             <DishAddModal config={modalConfig} />
         </>);

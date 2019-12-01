@@ -1,5 +1,6 @@
 // 菜谱的store
 import * as dishServices from '../services/api';
+import {message} from 'antd';
 export default {
     namespace: 'dishes',
     state: {
@@ -23,6 +24,36 @@ export default {
                 payload: data
             });
         },
+        *add({ payload }, {call, put}) {
+            const { data, errno } = yield call(dishServices.create, payload);
+            if (errno) {
+                message.warn('add fail');
+            }
+            else {
+                yield put({type: 'list', payload: {}});
+                yield put({type: 'updateModal', payload: {modal: false}});
+            }
+
+        },
+        *delete({ payload }, { call, put }) {
+            const { data, errno } = yield call(dishServices.remove, payload);
+            if (errno) {
+                message.warn('delte fail');
+            }
+            else {
+                yield put({type: 'list', payload: {}});
+            }
+        },
+        *edit({ payload: { id, query } }, { call, put }) {
+            const { data, errno } = yield call(dishServices.edit, id, query);
+            if (errno) {
+                message.warn('delte fail');
+            }
+            else {
+                yield put({type: 'list', payload: {}});
+            }
+        },
+
     },
     subscriptions: {
         setup({dispatch, history}) {

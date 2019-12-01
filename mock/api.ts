@@ -1,6 +1,6 @@
 export default {
     // 支持值为 Object 和 Array
-    'GET /api/list': {
+    'GET /api/dishes/list': {
         data: {
             list: [{
                 id: 1,
@@ -39,6 +39,12 @@ export default {
                 photos: []
             }],
             total: 5
-        }
+        },
+        errno: 0
+    },
+    'POST /api/dishes/add': {
+        data: {},
+        errno: 0,
+        msg: 'ok'
     },
 };
