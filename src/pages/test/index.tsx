@@ -15,7 +15,6 @@ class TestForm extends React.Component<TestFormInterface, {}> {
     const { dispatch, form } = this.props
     form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', err, values);
         dispatch({
           type: 'products/add',
           payload: {...values}
@@ -73,6 +72,10 @@ class Test extends React.Component<propsInterface, {}> {
             type: 'dishes/updateModal',
             payload: {modal: true}
         });
+        dispatch({
+            type: 'dishes/updateSelected',
+            payload: {selectedItem: {}}
+        });
     }
     render() {
         // const WrappedTestForm: any = Form.create({ name: 'test_from' })(TestForm);
@@ -81,7 +84,8 @@ class Test extends React.Component<propsInterface, {}> {
         let modalConfig = {
             dispatch,
             open: dishes.modal,
-            selectItem: null,
+            selectedItem: dishes.selectedItem,
+            ingredients: dishes.ingredients
         }
         let me = this;
         return (<>

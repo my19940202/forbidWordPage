@@ -35,7 +35,7 @@ const MenuLayout: React.FC = props => {
       </Layout.Sider>
       <Layout style={{ padding: '0 24px 24px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>八斗会</Breadcrumb.Item>
+                <Breadcrumb.Item>-</Breadcrumb.Item>
             </Breadcrumb>
             <Layout.Content style={{background: '#fff',padding: 24,margin: 0, minHeight: 280}}>
               {props.children}

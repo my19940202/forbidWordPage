@@ -9,9 +9,11 @@ export const DishTable = ({dispatch, data: {list, total}}: any) => {
             id,
         }
     })
-    const editEvent = () => {
-        // redux值
-        // 显示窗口
+    const editEvent = (item) => {
+        dispatch({
+            type: 'dishes/updateSelected',
+            payload: {selectedItem: item}
+        });
         dispatch({
             type: 'dishes/updateModal',
             payload: {modal: true}
@@ -38,7 +40,7 @@ export const DishTable = ({dispatch, data: {list, total}}: any) => {
         key: 'action',
         render: (text, record) => (
             <span>
-                <Button type="primary" icon="edit"/>&nbsp;
+                <Button type="primary" icon="edit" onClick={e => editEvent(record)}/>&nbsp;
                 <Button type="primary" icon="delete"/>
             </span>
         ),

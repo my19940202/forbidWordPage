@@ -4,6 +4,10 @@ export function fetch() {
       return request(`/api/dishes/list`, {});
 }
 
+export function fetchIngredients() {
+    return request('/api/ingredients/list', {});
+}
+
 export function remove(id: string) {
   return request(`/api/dishes/${id}`, {
     method: 'DELETE'

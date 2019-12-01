@@ -5,16 +5,27 @@ import {
 const {Item} = Form;
 const {Option} = Select;
 
-const addForm = ({form, dispatch}) => {
+const addForm = ({form, dispatch, editData, ingredients}) => {
     const {getFieldDecorator} = form;
     const handleSubmit = e => {
         e.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
-                dispatch({
-                    type: 'dishes/add',
-                    payload: {...values}
-                })
+                if (editData && editData.id) {
+                    dispatch({
+                        type: 'dishes/edit',
+                        payload: {
+                            id: editData.id,
+                            body: values
+                        }
+                    });
+                }
+                else {
+                    dispatch({
+                        type: 'dishes/add',
+                        payload: {...values}
+                    });
+                }
             }
         });
     };
@@ -27,7 +38,8 @@ const addForm = ({form, dispatch}) => {
         <Form onSubmit={handleSubmit} layout="horizontal">
             <Item label="菜名" {...formItemLayout}>
                 {getFieldDecorator('name', {
-                    rules: [{required: true, message: tips}]
+                    rules: [{required: true, message: tips}],
+                    initialValue: editData && editData.name || ''
                 })(
                     <Input placeholder={tips} name="name" />
                 )}
@@ -37,41 +49,40 @@ const addForm = ({form, dispatch}) => {
                     rules: [{
                         required: true,
                         message: tips
-                    }]
+                    }],
+                    initialValue: editData && editData.ingredients || []
                 })(
-                    <Select showSearch
-                        style={{ width: 200 }}
-                        placeholder="选取原材料">
-                        <Option value="包菜">包菜</Option>
-                        <Option value="香肠">香肠</Option>
+                    <Select mode="multiple" showSearch={true} placeholder="选取原材料">
+                        {ingredients.map(ele
+                            => <Option key={ele.id} value={ele.id}>{ele.name}</Option>)
+                        }
+                        <Option value='1'>白菜</Option>
                     </Select>
                 )}
             </Item>
             <Item label="描述" {...formItemLayout}>
                 {getFieldDecorator('desc', {
-                    rules: [{required: false, message: '描述'}]
-                })(
-                    <Input placeholder={tips} name="desc" />
-                )}
+                    rules: [{required: false, message: '描述'}],
+                    initialValue: editData && editData.desc || ''
+                })(<Input placeholder="输入描述" name="desc" />)}
             </Item>
             <Item>
-                <Button type="primary" htmlType="submit"
-                    onClick={e => handleSubmit(e)}>
+                <Button type="primary" htmlType="submit" onClick={e => handleSubmit(e)}>
                     提交
                 </Button>
             </Item>
             <p>TODO: 添加上传照片</p>
         </Form>
     );
-}
-export const DishAddModal = ({config: {dispatch, open, selectItem}}: any) => {
-    let updateModal = (modal: boolean) => dispatch({
-        type: 'dishes/updateModal',
-        payload: {modal}
-    });
+};
+
+export const DishAddModal = ({config: {dispatch, open, selectedItem, ingredients}}: any) => {
     const cancel = () => {
-        updateModal(false);
-    }
+        dispatch({
+            type: 'dishes/updateModal',
+            payload: {modal: false}
+        });
+    };
     const AddForm = Form.create({ name: 'test_from' })(addForm);
     return (
         <Modal
@@ -80,7 +91,7 @@ export const DishAddModal = ({config: {dispatch, open, selectItem}}: any) => {
             visible={open}
             onCancel={cancel}
         >
-            <AddForm dispatch={dispatch} />
+            <AddForm dispatch={dispatch} editData={selectedItem} ingredients={ingredients} />
         </Modal>
     );
 };
