@@ -1,36 +1,42 @@
 import request from '../../utils/request';
 
 export function fetch() {
-      return request(`/api/dishes/list`, {});
+    return request(`/api/tools/dishes/list`, {});
 }
 
 export function fetchIngredients() {
-    return request('/api/ingredients/list', {});
+    return request('/api/tools/ingredients/list', {});
 }
 
 export function addIngredients(values) {
-    return request('/api/ingredients/add', {
+    return request('/api/tools/ingredients/add', {
         method: 'POST',
-        body: JSON.stringify(values),
+        headers: {
+            'content-type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify(values)
     });
 }
 
 export function remove(id: string) {
-  return request(`/api/dishes/${id}`, {
+  return request(`/api/tools/dishes/${id}`, {
     method: 'DELETE'
   });
 }
 
 export function edit(id: string, values: Object) {
-  return request(`/api/dishes/${id}`, {
+  return request(`/api/tools/dishes/${id}`, {
     method: 'PUT',
     body: JSON.stringify(values),
   });
 }
 
 export function create(values: any) {
-  return request('/api/dishes/add', {
+  return request('/api/tools/dishes/add', {
     method: 'POST',
     body: JSON.stringify(values),
+    headers: {
+        'content-type': 'application/json;charset=utf-8',
+    }
   });
 }

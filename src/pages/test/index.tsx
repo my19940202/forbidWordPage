@@ -7,7 +7,6 @@ import {DishAddModal} from '../../components/DishAddModal';
 import {IngredientAddModal} from '../../components/IngredientAddModal';
 import { connect } from 'dva';
 
-
 interface PropsInterface {
     dishes: any[];
     dispatch: any;

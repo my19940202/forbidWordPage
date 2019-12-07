@@ -5,6 +5,9 @@ const config: IConfig =  {
   treeShaking: true,
   base: '/static',
   publicPath: './',
+//   define: {
+//     'process.env.dev': true
+//   },
   // routes: [
   //   {
   //     path: '/',
@@ -36,6 +39,13 @@ const config: IConfig =  {
       },
     }],
   ],
-}
+  // 本地调试 做跨域处理
+  proxy: {
+    '/api': {
+      target: 'http://localhost:8700',
+      changeOrigin: true
+    }
+  }
+};
 
 export default config;

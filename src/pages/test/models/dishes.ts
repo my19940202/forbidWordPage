@@ -12,6 +12,7 @@ export default {
         ingredientsModal: false
     },
     reducers: {
+        // TODO 这块不少方法可以合并
         save(state, { payload: {data: {list, total}} }: any) {
             return { ...state, list, total};
         },
@@ -21,8 +22,16 @@ export default {
         updateSelected(state, {payload: {selectedItem}}: any) {
             return { ...state, selectedItem};
         },
-        updateIngredients(state, { payload: {ingredientsModal} }: any) {
-            return { ...state, ingredientsModal};
+        updateIngredients(state, { payload }: any) {
+            let ret = state;
+            const {ingredientsModal, ingredients} = payload;
+            if ('ingredientsModal' in payload) {
+                ret = {...state, ingredientsModal};
+            }
+            if ('ingredients' in payload) {
+                ret = {...state, ingredients};
+            }
+            return ret;
         }
     },
     effects: {
@@ -30,14 +39,16 @@ export default {
             const { data } = yield call(dishServices.fetch, {page});
             yield put({
                 type: 'save',
-                payload: data
+                payload: {data}
             });
         },
         *ingredients(payload, {call, put}) {
             const { data } = yield call(dishServices.fetchIngredients, {});
             yield put({
                 type: 'updateIngredients',
-                payload: data
+                payload: {
+                    ingredients: data.data
+                }
             });
         },
         *addIngredient({ payload }, {call, put}) {
@@ -47,6 +58,7 @@ export default {
                 message.warn('add fail');
             }
             else {
+                yield put({type: 'ingredients', payload: {}});
                 yield put({type: 'updateIngredients', payload: {ingredientsModal: false}});
             }
         },
