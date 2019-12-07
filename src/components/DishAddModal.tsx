@@ -56,7 +56,6 @@ const addForm = ({form, dispatch, editData, ingredients}) => {
                         {ingredients.map(ele
                             => <Option key={ele.id} value={ele.id}>{ele.name}</Option>)
                         }
-                        <Option value='1'>白菜</Option>
                     </Select>
                 )}
             </Item>
@@ -86,7 +85,7 @@ export const DishAddModal = ({config: {dispatch, open, selectedItem, ingredients
     const AddForm = Form.create({ name: 'test_from' })(addForm);
     return (
         <Modal
-            title="crete dishes"
+            title={selectedItem && selectedItem.id ? '编辑菜肴' : '新建菜肴'}
             footer={null}
             visible={open}
             onCancel={cancel}

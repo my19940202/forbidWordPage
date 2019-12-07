@@ -4,67 +4,19 @@ import {
 } from 'antd';
 import {DishTable} from '../../components/DishTable';
 import {DishAddModal} from '../../components/DishAddModal';
+import {IngredientAddModal} from '../../components/IngredientAddModal';
 import { connect } from 'dva';
 
-interface TestFormInterface {
-    dispatch: any;
-}
-class TestForm extends React.Component<TestFormInterface, {}> {
-  handleSubmit = e => {
-    e.preventDefault();
-    const { dispatch, form } = this.props
-    form.validateFields((err, values) => {
-      if (!err) {
-        dispatch({
-          type: 'products/add',
-          payload: {...values}
-        })
-      }
-    });
-  };
 
-  render() {
-    const {
-      form: { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched }
-    } = this.props;
-    return (
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Item>
-            {getFieldDecorator('email', {
-              rules: [{ required: true, message: 'Please input your username!' }],
-            })(
-              <Input placeholder="enter your email" prefix={<Icon type="email" style={{ color: 'rgba(0,0,0,.25)' }} />} />
-            )}
-        </Form.Item>
-        <Form.Item>
-          {getFieldDecorator('name', {
-              rules: [{ required: true, message: 'Please input your username!' }],
-            })(
-              <Input
-                prefix={<Icon type="name" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder="enter your name"
-              />
-            )}
-        </Form.Item>
-        {/* <Form.Item>
-          <Checkbox>remeber me</Checkbox>
-        </Form.Item> */}
-        <Form.Item>
-          <Button type="primary" htmlType="submit" onClick={e => this.handleSubmit(e)}>add</Button>
-        </Form.Item>
-      </Form>
-    );
-  }
-}
-
-interface propsInterface {
+interface PropsInterface {
     dishes: any[];
     dispatch: any;
 }
-class Test extends React.Component<propsInterface, {}> {
+class Test extends React.Component<PropsInterface, {}> {
     constructor(props: any) {
         super(props);
         this.updateModal = this.updateModal.bind(this);
+        this.openIngredientModal = this.openIngredientModal.bind(this);
     }
     updateModal(event: MouseEvent) {
         let dispatch = this.props.dispatch;
@@ -77,8 +29,15 @@ class Test extends React.Component<propsInterface, {}> {
             payload: {selectedItem: {}}
         });
     }
+
+    openIngredientModal(event: MouseEvent) {
+        let dispatch = this.props.dispatch;
+        dispatch({
+            type: 'dishes/updateIngredients',
+            payload: {ingredientsModal: true}
+        });
+    }
     render() {
-        // const WrappedTestForm: any = Form.create({ name: 'test_from' })(TestForm);
         let dishes: any = this.props.dishes;
         let dispatch = this.props.dispatch;
         let modalConfig = {
@@ -90,12 +49,18 @@ class Test extends React.Component<propsInterface, {}> {
         let me = this;
         return (<>
             <Row>
-                <Button type="primary" icon="plus" onClick={me.updateModal} />
+                <Button type="primary" icon="plus" onClick={me.updateModal}>
+                    菜肴
+                </Button>
+                <Button style={{marginLeft: 15}} type="primary" icon="plus" onClick={me.openIngredientModal}>
+                    原材料
+                </Button>
             </Row>
-            <Row>
+            <Row style={{marginTop: 15}}>
                 <DishTable data={dishes} dispatch={dispatch} />
             </Row>
             <DishAddModal config={modalConfig} />
+            <IngredientAddModal dispatch={dispatch} open={dishes.ingredientsModal}/>
         </>);
     }
 }

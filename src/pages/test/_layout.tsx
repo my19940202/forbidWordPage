@@ -25,12 +25,6 @@ const MenuLayout: React.FC = props => {
               <Menu.Item key="test">
                 <Link to="/test/test">测试</Link>
               </Menu.Item>
-              <Menu.Item key="about">
-                <Link to="/test/aboutus">关于我们</Link>
-              </Menu.Item>
-              <Menu.Item key="more">
-                <Link to="/test/more">更多信息</Link>
-              </Menu.Item>
           </Menu>
       </Layout.Sider>
       <Layout style={{ padding: '0 24px 24px' }}>

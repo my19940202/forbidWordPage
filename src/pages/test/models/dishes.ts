@@ -8,7 +8,8 @@ export default {
         total: null,
         modal: false,
         selectedItem: {},
-        ingredients: []
+        ingredients: [],
+        ingredientsModal: false
     },
     reducers: {
         save(state, { payload: {data: {list, total}} }: any) {
@@ -20,8 +21,8 @@ export default {
         updateSelected(state, {payload: {selectedItem}}: any) {
             return { ...state, selectedItem};
         },
-        updateIngredients(state, { payload: {data: {list, total}} }: any) {
-            return { ...state, ingredients: list};
+        updateIngredients(state, { payload: {ingredientsModal} }: any) {
+            return { ...state, ingredientsModal};
         }
     },
     effects: {
