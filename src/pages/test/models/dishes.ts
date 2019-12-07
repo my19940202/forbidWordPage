@@ -40,6 +40,16 @@ export default {
                 payload: data
             });
         },
+        *addIngredient({ payload }, {call, put}) {
+            console.log(payload, 'payload');
+            const { errno } = yield call(dishServices.addIngredients, payload);
+            if (errno) {
+                message.warn('add fail');
+            }
+            else {
+                yield put({type: 'updateIngredients', payload: {ingredientsModal: false}});
+            }
+        },
         *add({ payload }, {call, put}) {
             const { data, errno } = yield call(dishServices.create, payload);
             if (errno) {

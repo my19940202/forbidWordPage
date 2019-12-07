@@ -8,6 +8,13 @@ export function fetchIngredients() {
     return request('/api/ingredients/list', {});
 }
 
+export function addIngredients(values) {
+    return request('/api/ingredients/add', {
+        method: 'POST',
+        body: JSON.stringify(values),
+    });
+}
+
 export function remove(id: string) {
   return request(`/api/dishes/${id}`, {
     method: 'DELETE'

@@ -94,6 +94,11 @@ export default {
         errno: 0,
         msg: 'ok'
     },
+    'POST /api/ingredients/add': {
+        data: {},
+        errno: 0,
+        msg: 'ok'
+    },
     'PUT /api/dishes/:id': {
         data: {},
         errno: 0,

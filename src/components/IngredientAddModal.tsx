@@ -1,20 +1,25 @@
 import React from 'react';
 import {
-    Modal, Form, Input, Select, Button
+    Modal, Form, Input, Select, Button,
+    Slider,
+    DatePicker
 } from 'antd';
 const {Item} = Form;
-const {Option} = Select;
 
 const form = ({form, dispatch}: any) => {
     const {getFieldDecorator} = form;
     const handleSubmit = e => {
         e.preventDefault();
         form.validateFields((err, values) => {
+            const {name, time, desc} = values;
             if (!err) {
                 dispatch({
                     type: 'dishes/addIngredient',
                     payload: {
-                        body: values
+                        name,
+                        desc,
+                        startMonth: time[0],
+                        endMonth: time[1]
                     }
                 });
             }
@@ -41,6 +46,12 @@ const form = ({form, dispatch}: any) => {
                 {getFieldDecorator('desc', {
                     rules: [{required: false, message: '描述'}]
                 })(<Input placeholder="输入材料描述" name="desc" />)}
+            </Item>
+            <Item label="供应时间(月)" {...formItemLayout}>
+                {getFieldDecorator('time', {
+                    rules: [{required: false, message: '描述'}],
+                    initialValue: [4, 6]
+                })(<Slider range={true} step={1} min={1} max={12}/>)}
             </Item>
             <Item>
                 <Button type="primary" htmlType="submit" onClick={e => handleSubmit(e)}>
