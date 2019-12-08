@@ -16,7 +16,7 @@ const addForm = ({form, dispatch, editData, ingredients}) => {
                         type: 'dishes/edit',
                         payload: {
                             id: editData.id,
-                            body: values
+                            ...values
                         }
                     });
                 }
@@ -34,6 +34,13 @@ const addForm = ({form, dispatch, editData, ingredients}) => {
         labelCol: {span: 4},
         wrapperCol: {span: 14}
     };
+    const genIngredientInitData = (str: string) => {
+        let ret: number[] = [];
+        if (!!str) {
+            ret = str.split(',').map(ele => Number(ele));
+        }
+        return ret;
+    };
     return (
         <Form onSubmit={handleSubmit} layout="horizontal">
             <Item label="菜名" {...formItemLayout}>
@@ -50,9 +57,14 @@ const addForm = ({form, dispatch, editData, ingredients}) => {
                         required: true,
                         message: tips
                     }],
-                    initialValue: editData && editData.ingredients || []
+                    initialValue: genIngredientInitData(editData.ingredients)
                 })(
-                    <Select mode="multiple" showSearch={true} placeholder="选取原材料">
+                    <Select
+                        mode="multiple" showSearch={true} placeholder="选取原材料"
+                        filterOption={(input, option) =>
+                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                    >
                         {ingredients.map(ele
                             => <Option key={ele.id} value={ele.id}>{ele.name}</Option>)
                         }

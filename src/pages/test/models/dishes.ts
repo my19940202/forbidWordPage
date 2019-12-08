@@ -76,28 +76,31 @@ export default {
                 yield put({type: 'list', payload: {}});
                 yield put({type: 'updateModal', payload: {modal: false}});
             }
+        },
+        *edit({ payload }, {call, put}) {
+            let {id, desc, name, ingredient} = payload;
+            console.log(id, desc, name, ingredient, 'id, desc, name, ingredient');
 
-        },
-        *delete({ payload }, { call, put }) {
-            const { data, errno } = yield call(dishServices.remove, payload);
+            const { data, errno } = yield call(dishServices.edit, {
+                id, desc, name, ingredients: ingredient.join(',')
+            });
             if (errno) {
-                message.warn('delte fail');
-            }
-            else {
-                yield put({type: 'list', payload: {}});
-            }
-        },
-        *edit({ payload: { id, body } }, { call, put }) {
-            const { data, errno } = yield call(dishServices.edit, id, body);
-            if (errno) {
-                message.warn('delte fail');
+                message.warn('add fail');
             }
             else {
                 yield put({type: 'list', payload: {}});
                 yield put({type: 'updateModal', payload: {modal: false}});
             }
         },
-
+        *deleteDishes({ payload:{id} }, { call, put }) {
+            const { data, errno } = yield call(dishServices.remove, id);
+            if (errno) {
+                message.warn('delte fail');
+            }
+            else {
+                yield put({type: 'list', payload: {}});
+            }
+        },
     },
     subscriptions: {
         setup({dispatch, history}) {

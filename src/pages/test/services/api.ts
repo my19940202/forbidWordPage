@@ -19,15 +19,18 @@ export function addIngredients(values) {
 }
 
 export function remove(id: string) {
-  return request(`/api/tools/dishes/${id}`, {
-    method: 'DELETE'
-  });
+    return request(`/api/tools/dishes/remove?id=${id}`, {
+        method: 'DELETE'
+    });
 }
 
-export function edit(id: string, values: Object) {
-  return request(`/api/tools/dishes/${id}`, {
-    method: 'PUT',
+export function edit(values) {
+  return request(`/api/tools/dishes/edit`, {
+    method: 'POST',
     body: JSON.stringify(values),
+    headers: {
+        'content-type': 'application/json;charset=utf-8',
+    }
   });
 }
 
