@@ -13,8 +13,8 @@ export default {
     },
     reducers: {
         // TODO 这块不少方法可以合并
-        save(state, { payload: {data: {list, total}} }: any) {
-            return { ...state, list, total};
+        save(state, { payload: {list} }: any) {
+            return { ...state, list};
         },
         updateModal(state, {payload: {modal}}: any) {
             return { ...state, modal};
@@ -39,7 +39,9 @@ export default {
             const { data } = yield call(dishServices.fetch, {page});
             yield put({
                 type: 'save',
-                payload: {data}
+                payload: {
+                    list: data.data
+                }
             });
         },
         *ingredients(payload, {call, put}) {
@@ -63,7 +65,10 @@ export default {
             }
         },
         *add({ payload }, {call, put}) {
-            const { data, errno } = yield call(dishServices.create, payload);
+            let {desc, name, ingredient} = payload;
+            const { data, errno } = yield call(dishServices.create, {
+                desc, name, ingredients: ingredient.join(',')
+            });
             if (errno) {
                 message.warn('add fail');
             }
