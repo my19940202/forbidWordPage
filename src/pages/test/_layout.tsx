@@ -36,7 +36,7 @@ const MenuLayout: React.FC = props => {
             </Layout.Content>
         </Layout>
     </Layout>
-    <Layout.Footer style={{ textAlign: 'center' }}>footer</Layout.Footer>
+    <Layout.Footer style={{ textAlign: 'center' }}>copyright: xishengbo1994@163.com</Layout.Footer>
   </Layout>
   );
 };

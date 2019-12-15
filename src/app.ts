@@ -6,7 +6,7 @@ export const dva = {
     onError(err: any) {
       console.log(err, 'error');
       err.preventDefault();
-      message.error(err.msg)
+      message.error(JSON.stringify(err));
     },
     initialState: {
       products: [

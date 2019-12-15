@@ -14,7 +14,6 @@ class TestForm extends React.Component<TestFormInterface, {}> {
     const { dispatch, form } = this.props
     form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', err, values);
         dispatch({
           type: 'products/add',
           payload: {...values}

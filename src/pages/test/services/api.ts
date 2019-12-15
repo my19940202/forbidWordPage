@@ -39,7 +39,7 @@ export function create(values: any) {
     method: 'POST',
     body: JSON.stringify(values),
     headers: {
-        'content-type': 'application/json;charset=utf-8',
+        'content-type': 'application/json;charset=utf-8'
     }
   });
 }

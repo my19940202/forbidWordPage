@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, Spin, Button, Tag} from 'antd';
+import {Table, Spin, Button, Tag, Row, Col} from 'antd';
 import {isEmpty} from 'lodash';
 
 export const DishTable = ({dispatch, data: {ingredients, list, total}}: any) => {
@@ -70,10 +70,15 @@ export const DishTable = ({dispatch, data: {ingredients, list, total}}: any) => 
         <>
             <Spin spinning={isEmpty(list)} delay={500}>
                 <Table
+                    bordered={true}
                     rowKey="id"
                     dataSource={list || []}
                     columns={columns}
+                    pagination={false}
                 />
+                <div style={{marginTop: 10, textAlign: 'right'}}>
+                    <span>目前共有{list.length || 0}种菜</span>
+                </div>
             </Spin>
         </>
     );

@@ -54,7 +54,6 @@ export default {
             });
         },
         *addIngredient({ payload }, {call, put}) {
-            console.log(payload, 'payload');
             const { errno } = yield call(dishServices.addIngredients, payload);
             if (errno) {
                 message.warn('add fail');
@@ -79,8 +78,6 @@ export default {
         },
         *edit({ payload }, {call, put}) {
             let {id, desc, name, ingredient} = payload;
-            console.log(id, desc, name, ingredient, 'id, desc, name, ingredient');
-
             const { data, errno } = yield call(dishServices.edit, {
                 id, desc, name, ingredients: ingredient.join(',')
             });
