@@ -4,6 +4,9 @@
   text-align: center;
 }
 
+.user-center {
+    color: #fff;
+}
 .wrapper {
   width: 100%;
   position: relative;

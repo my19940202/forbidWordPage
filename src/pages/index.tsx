@@ -1,73 +1,73 @@
 import React from 'react';
-import styles from './index.css';
-import { Row, Col, Spin } from 'antd';
-import BraftEditor from 'braft-editor';
-import {wordDict} from './dict';
-import 'braft-editor/dist/index.css';
+import {
+    Button, Row, Col, Input, Form, Checkbox, Icon
+} from 'antd';
+import {DishTable} from '../components/DishTable';
+import {DishAddModal} from '../components/DishAddModal';
+import {IngredientAddModal} from '../components/IngredientAddModal';
+import { connect } from 'dva';
 
-export class Tools extends React.Component<{}, {editorState: any, replaceState: string }> {
-  private debounceTimer: any;
-  private wordReg: any;
-  private isDebouncing: boolean;
-  constructor(props: any) {
-    super(props);
-    this.debounceTimer = 0;
-    this.state = {
-      editorState: BraftEditor.createEditorState(null),
-      replaceState: ''
-    };
-    this.isDebouncing = false;
-    this.wordReg = new RegExp(`(${wordDict.join('|')})`, 'g');
-  }
+interface PropsInterface {
+    dishes: any[];
+    dispatch: any;
+}
+class Test extends React.Component<PropsInterface, {}> {
+    constructor(props: any) {
+        super(props);
+        this.updateModal = this.updateModal.bind(this);
+        this.openIngredientModal = this.openIngredientModal.bind(this);
+    }
+    updateModal(event: MouseEvent) {
+        let dispatch = this.props.dispatch;
+        dispatch({
+            type: 'dishes/updateModal',
+            payload: {modal: true}
+        });
+        dispatch({
+            type: 'dishes/updateSelected',
+            payload: {selectedItem: {}}
+        });
+    }
 
-  asyncToCopyEditor(state) {
-    let me = this;
-    clearTimeout(me.debounceTimer);
-    me.debounceTimer = setTimeout(() => {
-      let replaceHTML = state.toHTML().replace(me.wordReg, `<span style="color:red">$1</span>`);
-      replaceHTML = replaceHTML.replace(new RegExp('> </p>', 'g'), '></p>');
-      me.setState({ replaceState: replaceHTML });
-    }, 200);
-  }
-
-  handleEditorChange = editorState => {
-    this.asyncToCopyEditor(editorState)
-    this.setState({ editorState });
-  };
-
-  render() {
-    return (
-      <>
-        <Row style={{margin: '10px 0', textAlign: 'left'}}>
-          <Col span={12}>
-              在此粘贴文案后自动识别,根据文稿长短，请您耐心等待5-45秒(已经输入
-              {this.state.editorState && this.state.editorState.toText().length}
-              个字)
-            </Col>
-            <Col span={12}>
-            新广告法禁用词、小红书禁用词已用<span style={{color: 'red'}}>红色</span>高亮字体标出,请您参考修改，审慎发布
-            </Col>
-        </Row>
-        <Row>
-          <Col span={12}>
-            <BraftEditor
-              contentStyle={{height: 'auto', minHeight: 400}}
-              className={styles.editor}
-              placeholder="在此粘贴文案"
-              controls={[]}
-              value={this.state.editorState}
-              onChange={this.handleEditorChange}
-            />
-          </Col>
-          <Col span={12}>
-            <div className={styles.validator} dangerouslySetInnerHTML={{__html: this.state.replaceState}} />
-          </Col>
-        </Row>
-      </>
-    );
-  }
+    openIngredientModal(event: MouseEvent) {
+        let dispatch = this.props.dispatch;
+        dispatch({
+            type: 'dishes/updateIngredients',
+            payload: {ingredientsModal: true}
+        });
+    }
+    render() {
+        let dishes: any = this.props.dishes;
+        let dispatch = this.props.dispatch;
+        let modalConfig = {
+            dispatch,
+            open: dishes.modal,
+            selectedItem: dishes.selectedItem,
+            ingredients: dishes.ingredients
+        }
+        let me = this;
+        return (<>
+            <Row>
+                <Button type="primary" icon="plus" onClick={me.updateModal}>
+                    菜肴
+                </Button>
+                <Button style={{marginLeft: 15}} type="primary" icon="plus" onClick={me.openIngredientModal}>
+                    原材料
+                </Button>
+            </Row>
+            <Row style={{marginTop: 15}}>
+                <DishTable data={dishes} dispatch={dispatch} />
+            </Row>
+            <DishAddModal config={modalConfig} />
+            <IngredientAddModal dispatch={dispatch} open={dishes.ingredientsModal}/>
+        </>);
+    }
 }
 
-export default function() {
-  return <Tools/>;
+const IndexWrapper = ({ dispatch, dishes}: any) => {
+  return <Test dispatch={dispatch} dishes={dishes} />;
 }
+
+export default connect(({dispatch, dishes}: any) => ({
+  dishes
+}))(IndexWrapper);

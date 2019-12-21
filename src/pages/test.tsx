@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Button, Row, Col, Input, Form, Checkbox, Icon
 } from 'antd';
-import {ProductList} from '../../components/ProductList';
+import {ProductList} from '../components/ProductList';
 import { connect } from 'dva';
 
 interface TestFormInterface {
