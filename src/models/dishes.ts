@@ -102,7 +102,7 @@ export default {
     subscriptions: {
         setup({dispatch, history}) {
             return history.listen(({ pathname, query }) => {
-                if (pathname === '/test/') {
+                if (pathname === '/') {
                     dispatch({ type: 'list', payload: query });
                     dispatch({ type: 'ingredients', payload: {} });
                 }
