@@ -70,7 +70,7 @@ export const IngredientAddModal = ({dispatch, open}: any) => {
             payload: {ingredientsModal: false}
         });
     };
-    const IngredientForm = Form.create({ name: 'test_from' })(form);
+    const IngredientForm = Form.create({ name: 'ingredient_from' })(form);
     return (
         <Modal
             title="新建材料"

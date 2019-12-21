@@ -29,6 +29,12 @@ const addForm = ({form, dispatch, editData, ingredients}) => {
             }
         });
     };
+    const openIngredientModal = () => {
+        dispatch({
+            type: 'dishes/updateIngredients',
+            payload: {ingredientsModal: true}
+        });
+    };
     const tips = '输入菜品名称';
     const formItemLayout = {
         labelCol: {span: 4},
@@ -70,6 +76,14 @@ const addForm = ({form, dispatch, editData, ingredients}) => {
                         }
                     </Select>
                 )}
+                <Button
+                    onClick={e => openIngredientModal()}
+                    style={{fontSize: 10}}
+                    type="primary"
+                    size="small"
+                >
+                    点击添加原材料
+                </Button>
             </Item>
             <Item label="描述" {...formItemLayout}>
                 {getFieldDecorator('desc', {
@@ -94,7 +108,7 @@ export const DishAddModal = ({config: {dispatch, open, selectedItem, ingredients
             payload: {modal: false}
         });
     };
-    const AddForm = Form.create({ name: 'test_from' })(addForm);
+    const AddForm = Form.create({ name: 'dish_from' })(addForm);
     return (
         <Modal
             title={selectedItem && selectedItem.id ? '编辑菜肴' : '新建菜肴'}

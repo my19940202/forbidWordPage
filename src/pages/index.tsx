@@ -58,8 +58,8 @@ class Test extends React.Component<PropsInterface, {}> {
             <Row style={{marginTop: 15}}>
                 <DishTable data={dishes} dispatch={dispatch} />
             </Row>
-            <DishAddModal config={modalConfig} />
-            <IngredientAddModal dispatch={dispatch} open={dishes.ingredientsModal}/>
+            <DishAddModal key="dish" config={modalConfig} />
+            <IngredientAddModal key="ingredient" dispatch={dispatch} open={dishes.ingredientsModal}/>
         </>);
     }
 }
